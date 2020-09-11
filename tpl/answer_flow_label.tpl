@@ -1,0 +1,1 @@
+<flow_label class="Block"><response_label ident="___IDENT___" shuffle="Yes" rarea="Ellipse" rrange="Exact"><flow_mat class="FORMATTED_TEXT_BLOCK"><material><mat_extension><mat_formattedtext type="HTML">&lt;p&gt;___ANSWER___&lt;/p&gt;</mat_formattedtext></mat_extension></material></flow_mat></response_label></flow_label>

@@ -1,0 +1,1 @@
+<respcondition><conditionvar><varequal respident="___IDENT___" case="No"/></conditionvar><setvar variablename="SCORE" action="Set">0</setvar><displayfeedback linkrefid="___IDENT___" feedbacktype="Response"/></respcondition>

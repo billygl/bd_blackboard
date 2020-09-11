@@ -1,0 +1,1 @@
+<itemfeedback ident="___IDENT___" view="All"><solution view="All" feedbackstyle="Complete"><solutionmaterial><flow_mat class="Block"><flow_mat class="FORMATTED_TEXT_BLOCK"><material><mat_extension><mat_formattedtext type="HTML"/></mat_extension></material></flow_mat></flow_mat></solutionmaterial></solution></itemfeedback>
