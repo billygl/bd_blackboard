@@ -22,19 +22,22 @@ def escape_html(text):
 
 file_input = "data/tsv.tsv"
 
-tpl_res = "tpl/res00001.tpl"
-tpl_item = "tpl/item.tpl" 
-tpl_answer_flow_label = "tpl/answer_flow_label.tpl" 
-tpl_answer_respcondition_error = "tpl/answer_respcondition_error.tpl"
-tpl_answer_itemfeedback_error = "tpl/answer_itemfeedback_error.tpl"
+mode = "2"
+tpl = "tpl" + mode
+tpl_res = tpl + "/res00001.tpl"
+tpl_item = tpl + "/item.tpl" 
+tpl_answer_flow_label = tpl + "/answer_flow_label.tpl" 
+tpl_answer_respcondition_error = tpl + "/answer_respcondition_error.tpl"
+tpl_answer_itemfeedback_error = tpl + "/answer_itemfeedback_error.tpl"
 
-file_output = "zip/res00001.dat"
+_zip = "zip" + mode
+file_output = _zip + "/res00001.dat"
 
 f_input = open(file_input, "r", encoding="utf8", newline="\r\n")
 f_questions = f_input.readlines()
 
 t_res = open(tpl_res, "r")
-t_res_content = t_res.read()
+t_res_content = replace("\s{2,}|\n", "", t_res.read())
 t_item = open(tpl_item, "r")
 t_item_content = t_item.read()
 t_item_content = re.sub(r"\n\s*", "", t_item_content, flags=re.UNICODE)
