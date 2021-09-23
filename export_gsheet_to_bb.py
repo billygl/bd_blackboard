@@ -1,9 +1,15 @@
+import os
+from os import walk
+import pathlib
+import zipfile
 import re
 import html
 
-test_name = "TEST_NOMBRE"
+test_name = "TEST_202102_XX"
 test_instructions = "TEST_INSTRUCCIONES"
 test_description = "TEST_DESCRIPCIÓN"
+
+file_input = "data/evaluations 202102 - tsv XX.tsv"
 
 def replace(search, replace, subject):
     p = re.compile(search)
@@ -19,8 +25,6 @@ def escape_html(text):
     text = html.escape(text)
     text = text.replace("\r", "<br>")
     return html.escape("<span style=\"white-space: pre;\">" + text + "</span>")
-
-file_input = "data/tsv.tsv"
 
 mode = "2"
 tpl = "tpl" + mode
@@ -69,10 +73,12 @@ for line, f_question in enumerate(f_questions):
     COLUMN_QUESTION_ID = 0
     COLUMN_QUESTION = 2
     COLUMN_ANSWER = 3
+    
     for index in range(5):
         if COLUMN_ANSWER + index >= len(question):
             continue
         answer = question[COLUMN_ANSWER + index]
+        
         if len(answer.strip()):
             answer_flow_label = replace_arr(
                 ['___IDENT___', '___ANSWER___'], 
@@ -96,6 +102,7 @@ for line, f_question in enumerate(f_questions):
     UNIFIER = ""
     question_text = question[COLUMN_QUESTION]
     question_id = question[COLUMN_QUESTION_ID]
+    
     question_title = question_text
     item = replace_arr(
         ['___QUESTION_TITLE___', '___QUESTION_TEXT___', '___IDENT_OK___',
@@ -110,6 +117,7 @@ for line, f_question in enumerate(f_questions):
         t_item_content
     )
     items.append(item)
+    #print(question_id)
 
 res = replace_arr(
     ['___NAME___', '___INSTRUCTIONS___', '___DESCRIPTION___', 
@@ -128,3 +136,23 @@ t_answer_respcondition_error.close()
 f_output = open (file_output, 'w', encoding="utf8")
 f_output.write(res)
 f_output.close()
+
+zip_file = os.path.join(_zip, _zip + ".zip")
+if os.path.exists(zip_file):
+    os.remove(zip_file)
+
+zipf = zipfile.ZipFile(zip_file, 'w', zipfile.ZIP_DEFLATED)
+for root, dirs, files in os.walk(_zip):
+    for file in files:
+        if not (pathlib.Path(file).suffix == ".zip"):
+            zipf.write(
+                os.path.join(root, file),
+                os.path.relpath(os.path.join(root, file), os.path.join(_zip))
+            )
+    for diri in dirs:
+        zipf.write(
+            os.path.join(root, diri),
+            os.path.relpath(os.path.join(root, diri), os.path.join(_zip))
+        )
+
+zipf.close()
